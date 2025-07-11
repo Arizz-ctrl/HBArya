@@ -1,0 +1,438 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Happy Birthday, Arya!</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link href="https://fonts.googleapis.com/css2?family=Pacifico&family=Montserrat:wght@700&family=Roboto:wght@400;500&display=swap" rel="stylesheet">
+  <style>
+    html, body { height: 100%; margin: 0; padding: 0; overflow-x: hidden; scroll-behavior: smooth; }
+    body {
+      min-height: 100vh;
+      background: linear-gradient(180deg, #2e2a52 0%, #3f2c5e 60%, #fce4ec 100%);
+      font-family: 'Roboto', 'Arial', sans-serif;
+      overflow-x: hidden;
+    }
+    .moon { position: absolute; top: 40px; left: 60px; width: 120px; height: 120px; z-index: 1; filter: drop-shadow(0 0 40px #fff8);}
+    .stars { position: absolute; width: 100vw; height: 320px; left: 0; top: 0; z-index: 1; pointer-events: none; }
+    .star { position: absolute; width: 2px; height: 2px; background: #fff; border-radius: 50%; opacity: 0.7; animation: twinkle 3s infinite alternate;}
+    @keyframes twinkle { 0%,100% { opacity: 0.7; } 50% { opacity: 1; } }
+    .balloon { position: absolute; bottom: 0; width: 56px; height: 90px; z-index: 2; animation: floatBalloon 12s linear infinite; opacity: 0.85;}
+    .balloon1 { left: 12vw; animation-delay: 0s;}
+    .balloon2 { left: 32vw; animation-delay: 2s;}
+    .balloon3 { left: 52vw; animation-delay: 4s;}
+    .balloon4 { left: 72vw; animation-delay: 6s;}
+    @keyframes floatBalloon { 0% { transform: translateY(0) scale(1);} 80% { opacity: 1;} 100% { transform: translateY(-120vh) scale(1.07); opacity: 0;}}
+    .main-content { position: relative; z-index: 3; display: flex; flex-direction: column; align-items: center; justify-content: flex-end; min-height: 100vh; padding-top: 220px; padding-bottom: 30px;}
+    .stethoscope-row { display: flex; align-items: flex-end; justify-content: center; margin-bottom: 30px; position: relative; min-height: 260px;}
+    .stethoscope-svg {
+      width: 540px; height: 220px; margin-right: 0;
+      filter: drop-shadow(0 2px 6px #1116);
+      display: block;
+      z-index: 10;
+    }
+    #stethoscope-earL, #stethoscope-earR {
+      transform-origin: center;
+      animation: stetho-ear 2.5s infinite alternate;
+    }
+    #stethoscope-earR { animation-delay: 1.25s; }
+    @keyframes stetho-ear {
+      0% { transform: rotate(0deg);}
+      100% { transform: rotate(10deg);}
+    }
+    #stethoscope-wire {
+      stroke-dasharray: 410;
+      stroke-dashoffset: 410;
+      animation: stetho-wire 2.5s forwards;
+      animation-delay: 0.2s;
+    }
+    @keyframes stetho-wire {
+      to { stroke-dashoffset: 0; }
+    }
+    #stethoscope-chest {
+      animation: stetho-chest 2s infinite alternate;
+      transform-origin: 50% 50%;
+    }
+    @keyframes stetho-chest {
+      0% { transform: scale(1);}
+      60% { transform: scale(1.08);}
+      100% { transform: scale(1);}
+    }
+    .stetho-btn {
+      background: linear-gradient(90deg, #e57373 0%, #fff176 100%);
+      color: #3f2c5e;
+      font-weight: bold;
+      font-size: 1.1rem;
+      border: none;
+      border-radius: 24px;
+      padding: 0.7em 2.2em;
+      box-shadow: 0 2px 8px #0002;
+      cursor: pointer;
+      transition: background 0.2s, transform 0.2s;
+      outline: none;
+      position: absolute;
+      left: 50%;
+      bottom: 18px;
+      transform: translateX(-50%);
+      z-index: 20;
+    }
+    .stetho-btn:active { background: linear-gradient(90deg, #fff176 0%, #e57373 100%); transform: scale(0.96);}
+    .falling-heart { position: absolute; left: 50%; top: 120px; width: 54px; height: 54px; opacity: 0; pointer-events: none; z-index: 15; will-change: transform; transition: opacity 0.3s; transform: translateX(-50%);}
+    .falling-heart.active { opacity: 1; animation: heartPhysicsFall 1.2s cubic-bezier(.2,1.2,.4,1) forwards;}
+    .falling-heart.vanish { opacity: 0; transition: opacity 0.3s;}
+    @keyframes heartPhysicsFall {
+      0% { transform: translateX(-50%) translateY(0) scale(1);}
+      60% { transform: translateX(-50%) translateY(320px) scale(1.07);}
+      80% { transform: translateX(-50%) translateY(380px) scale(0.96);}
+      90% { transform: translateX(-50%) translateY(355px) scale(1.02);}
+      100% { transform: translateX(-50%) translateY(380px) scale(1);}
+    }
+    .ground-area { position: relative; width: 100vw; height: 900px; margin-top: 0; margin-bottom: 0; z-index: 4; display: flex; align-items: flex-end; justify-content: center;}
+    .ground-line { position: absolute; left: 50%; bottom: 0; transform: translateX(-50%); width: 0; height: 18px; background: #fff; border-radius: 9px; box-shadow: 0 2px 10px #fff9; transition: width 1.2s cubic-bezier(.6,1.2,.4,1); z-index: 4;}
+    .ground-line.active { width: 900px; transition: width 1.2s cubic-bezier(.6,1.2,.4,1);}
+    .tree-container { position: absolute; left: 50%; bottom: 18px; transform: translateX(-50%); width: 900px; height: 850px; pointer-events: none; z-index: 6; opacity: 0; transition: opacity 0.7s; display: flex; align-items: flex-end; justify-content: center;}
+    .tree-container.active { opacity: 1; animation: treeGrowMove 2.2s cubic-bezier(.5,1.6,.6,.98) forwards;}
+    @keyframes treeGrowMove {
+      0% { left: 50%; transform: translateX(-50%) scale(0.5);}
+      70% { left: 50%; transform: translateX(-50%) scale(1);}
+      100% { left: 62%; transform: translateX(-50%) scale(1);}
+    }
+    .tree-svg { width: 900px; height: 850px; transform: scaleY(0.05); transform-origin: 50% 100%; transition: transform 1.6s cubic-bezier(.6,1.2,.4,1);}
+    .tree-container.active .tree-svg { transform: scaleY(1); transition: transform 1.6s cubic-bezier(.6,1.2,.4,1);}
+    .tree-svg .tree-trunk, .tree-svg .tree-branch {
+      stroke: #ff9800 !important;
+      stroke-dasharray: 3000;
+      stroke-dashoffset: 3000;
+      animation: drawBranch 2.2s ease forwards;
+    }
+    .tree-container.active .tree-svg .tree-trunk { animation-delay: 0.2s;}
+    .tree-container.active .tree-svg .tree-branch { animation-delay: 0.8s;}
+    @keyframes drawBranch { to { stroke-dashoffset: 0; } }
+    .tree-svg .flower, .tree-svg .leaf {
+      opacity: 0;
+      transform: scale(0.2);
+      animation: flowerPop 0.8s cubic-bezier(.5,1.6,.6,.98) forwards;
+    }
+    .tree-container.active .tree-svg .flower { animation-delay: 2.1s;}
+    .tree-container.active .tree-svg .leaf { animation-delay: 2.3s;}
+    @keyframes flowerPop { to { opacity: 1; transform: scale(1);}
+    }
+    .fall-leaves { position: absolute; left: 0; top: 0; width: 100%; height: 100%; pointer-events: none; z-index: 7; overflow: visible;}
+    .fall-leaf { position: absolute; width: 48px; height: 48px; opacity: 0.85; will-change: transform; animation: fallLeafPhysics 2.8s cubic-bezier(.2,1.2,.4,1) forwards;}
+    @keyframes fallLeafPhysics {
+      0% { transform: translateY(0) rotate(-20deg) scale(0.8);}
+      60% { opacity: 1;}
+      80% { transform: translateY(400px) rotate(40deg) scale(1.1);}
+      100% { transform: translateY(600px) rotate(60deg) scale(1.02); opacity: 0;}
+    }
+    .cake-container { position: relative; width: 220px; height: 160px; margin: 40px auto 0; opacity: 0; transition: opacity 0.7s;}
+    .cake-container.visible { opacity: 1; }
+    .cake-layer { position: absolute; left: 50%; transform: translateX(-50%); border-radius: 30px 30px 40px 40px; box-shadow: 0 6px 12px rgba(0,0,0,0.08); transition: transform 1.2s cubic-bezier(.7,1.6,.6,.98);}
+    .cake-layer.bottom { width: 200px; height: 60px; background: #ffb347; bottom: 0; border-bottom: 10px solid #e17055;}
+    .cake-layer.middle { width: 160px; height: 50px; background: #fff; bottom: 50px; border-bottom: 8px solid #b2bec3;}
+    .cake-layer.top { width: 120px; height: 40px; background: #d72660; bottom: 90px; border-bottom: 6px solid #fff;}
+    .icing { position: absolute; left: 50%; bottom: 124px; transform: translateX(-50%); width: 120px; height: 22px; background: #fff; border-radius: 50% 50% 70% 70% / 60% 60% 100% 100%; box-shadow: 0 2px 8px rgba(255,255,255,0.19);}
+    .candles { position: absolute; left: 50%; bottom: 140px; transform: translateX(-50%); display: flex; gap: 20px;}
+    .candle { width: 12px; height: 38px; background: repeating-linear-gradient(135deg, #ffe066 0 6px, #f9ca24 6px 12px); border-radius: 4px; position: relative; display: flex; align-items: flex-end; justify-content: center;}
+    .flame { position: absolute; top: -18px; left: 50%; transform: translateX(-50%); width: 14px; height: 18px; background: radial-gradient(ellipse at center, #ffd700 60%, #ff9800 100%); border-radius: 50% 50% 60% 60%; opacity: 0.85; animation: flicker 1s infinite alternate; box-shadow: 0 0 18px 4px #ffd70099;}
+    .candle:nth-child(2) .flame { animation-delay: 0.2s; }
+    .candle:nth-child(3) .flame { animation-delay: 0.4s; }
+    .cake-container.cut .cake-layer.bottom { transform: translate(-160px, 0);}
+    .cake-container.cut .cake-layer.middle { transform: translate(160px, 0);}
+    .cake-container.cut .cake-layer.top { transform: translate(-160px, 0);}
+    .cake-container.cut .icing, .cake-container.cut .candles { opacity: 0.3; transition: opacity 0.7s;}
+    @keyframes flicker {
+      0% { transform: translateX(-50%) scaleY(1); opacity: 0.8; }
+      40% { transform: translateX(-50%) scaleY(1.1) scaleX(0.95); opacity: 1; }
+      70% { transform: translateX(-50%) scaleY(0.9) scaleX(1.05); opacity: 0.9; }
+      100% { transform: translateX(-50%) scaleY(1); opacity: 0.85; }
+    }
+    .message-area {
+      min-height: 130px;
+      margin-top: 30px;
+      margin-bottom: 80px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: flex-start;
+      position: relative;
+      z-index: 10;
+    }
+    .typewriter { color: #fff; font-size: 2rem; font-weight: 600; text-shadow: 0 2px 8px #0006; margin-bottom: 16px; letter-spacing: 1.2px; min-height: 36px; text-align: center; width: 100%; max-width: 650px; overflow-wrap: break-word; white-space: pre-line; opacity: 0; visibility: hidden; transition: opacity 0.5s, visibility 0s linear 0.5s;}
+    .typewriter.visible { opacity: 1; visibility: visible; transition: opacity 0.5s, visibility 0s;}
+    .wish-line { opacity: 0; transform: translateY(20px) scale(0.98); transition: all 0.7s cubic-bezier(.5,1.6,.6,.98);}
+    .wish-line.visible { opacity: 1; transform: translateY(0) scale(1);}
+    .wish1 { font-family: 'Pacifico', cursive; color: #fff !important; font-size: 2.2rem; letter-spacing: 2px;}
+    .wish2 { font-family: 'Montserrat', sans-serif; color: #01579b; font-size: 1.3rem; margin-top: 18px;}
+    .wish3 { font-family: 'Roboto', sans-serif; color: #ff9800 !important; font-size: 1.1rem; margin-top: 16px;}
+    .wish4 { font-family: 'Montserrat', sans-serif; color: #bf360c; font-size: 1.1rem; margin-top: 16px;}
+    .wish5 {
+      font-family: 'Pacifico', cursive;
+      color: #fff !important;
+      font-size: 1.3rem;
+      margin-top: 24px;
+    }
+    @media (max-width: 1200px) {
+      .tree-container, .tree-svg { width: 600px !important; height: 600px !important;}
+      .ground-line.active { width: 600px;}
+      .ground-area { height: 600px;}
+      .cake-container { width: 180px; height: 120px;}
+      .stethoscope-svg { width: 350px; height: 140px;}
+    }
+    @media (max-width: 900px) {
+      .tree-container, .tree-svg { width: 400px !important; height: 300px !important;}
+      .ground-line.active { width: 400px;}
+      .ground-area { height: 300px;}
+      .cake-container { width: 120px; height: 80px;}
+      .stethoscope-svg { width: 220px; height: 90px;}
+    }
+    @media (max-width: 600px) {
+      .moon { left: 18px; top: 18px; width: 60px; height: 60px;}
+      .tree-container, .tree-svg { width: 260px !important; height: 180px !important;}
+      .ground-line.active { width: 220px;}
+      .main-content { padding-top: 120px;}
+      .message-area { margin-top: 60px; margin-bottom: 40px;}
+      .birthday-note, .typewriter { font-size: 1.05rem;}
+      .wish1 { font-size: 1.3rem;}
+      .wish2, .wish3, .wish4, .wish5 { font-size: 1rem;}
+      .stethoscope-svg { width: 160px; height: 60px;}
+    }
+  </style>
+</head>
+<body>
+  <!-- Cosmic Background -->
+  <svg class="moon" viewBox="0 0 120 120">
+    <defs>
+      <radialGradient id="moonGlow" cx="50%" cy="50%" r="50%">
+        <stop offset="0%" stop-color="#fffde4" stop-opacity="1"/>
+        <stop offset="100%" stop-color="#ffe0f7" stop-opacity="0.5"/>
+      </radialGradient>
+    </defs>
+    <circle cx="60" cy="60" r="50" fill="url(#moonGlow)"/>
+    <path d="M60 10a50 50 0 1 0 0 100c-18-10-30-28-30-50s12-40 30-50z" fill="#f6e7ff"/>
+  </svg>
+  <div class="stars" id="stars"></div>
+  <!-- Balloons -->
+  <svg class="balloon balloon1" viewBox="0 0 56 90">
+    <ellipse cx="28" cy="42" rx="26" ry="42" fill="#ffb347"/>
+    <rect x="24" y="82" width="8" height="12" rx="4" fill="#d72660"/>
+    <path d="M28 84 Q36 90 28 98 Q20 90 28 84Z" fill="#fff"/>
+  </svg>
+  <svg class="balloon balloon2" viewBox="0 0 56 90">
+    <ellipse cx="28" cy="42" rx="26" ry="42" fill="#8ec6f6"/>
+    <rect x="24" y="82" width="8" height="12" rx="4" fill="#43a047"/>
+    <path d="M28 84 Q36 90 28 98 Q20 90 28 84Z" fill="#fff"/>
+  </svg>
+  <svg class="balloon balloon3" viewBox="0 0 56 90">
+    <ellipse cx="28" cy="42" rx="26" ry="42" fill="#f48fb1"/>
+    <rect x="24" y="82" width="8" height="12" rx="4" fill="#ffb347"/>
+    <path d="M28 84 Q36 90 28 98 Q20 90 28 84Z" fill="#fff"/>
+  </svg>
+  <svg class="balloon balloon4" viewBox="0 0 56 90">
+    <ellipse cx="28" cy="42" rx="26" ry="42" fill="#ffd700"/>
+    <rect x="24" y="82" width="8" height="12" rx="4" fill="#8ec6f6"/>
+    <path d="M28 84 Q36 90 28 98 Q20 90 28 84Z" fill="#fff"/>
+  </svg>
+  <!-- Main Content -->
+  <div class="main-content">
+    <div class="stethoscope-row">
+      <!-- Animated SVG stethoscope -->
+      <svg class="stethoscope-svg" viewBox="0 0 540 220">
+        <!-- Earpieces -->
+        <ellipse id="stethoscope-earL" cx="110" cy="60" rx="22" ry="22" fill="#fff" stroke="#888" stroke-width="8"/>
+        <ellipse id="stethoscope-earR" cx="430" cy="60" rx="22" ry="22" fill="#fff" stroke="#888" stroke-width="8"/>
+        <!-- Tubes -->
+        <path id="stethoscope-wire" d="M110,60 Q110,160 270,180 Q430,160 430,60" stroke="#3949ab" stroke-width="14" fill="none"/>
+        <!-- Chestpiece -->
+        <circle id="stethoscope-chest" cx="270" cy="180" r="28" fill="#fff" stroke="#d72660" stroke-width="7"/>
+        <circle cx="270" cy="180" r="15" fill="#f06292" stroke="#fff" stroke-width="3"/>
+      </svg>
+      <button class="stetho-btn" id="stethoBtn">Click Me</button>
+      <svg class="falling-heart" id="fallingHeart" viewBox="0 0 54 54">
+        <path d="M27 48 Q12 36 12 24 A9 9 0 0 1 27 15 A9 9 0 0 1 42 24 Q42 36 27 48Z" fill="#e53935" stroke="#fff" stroke-width="2"/>
+      </svg>
+    </div>
+    <div class="ground-area">
+      <div class="ground-line" id="groundLine"></div>
+      <div class="tree-container" id="treeContainer">
+        <svg class="tree-svg" viewBox="0 0 900 850" width="900" height="850">
+          <!-- S-shaped trunk -->
+          <path class="tree-trunk" d="M450 830 Q470 600 400 500 Q330 400 460 300 Q590 200 430 110 Q270 20 450 30" stroke="#ff9800" stroke-width="54" fill="none"/>
+          <!-- More curvy branches -->
+          <path class="tree-branch" d="M460 300 Q390 350 370 220" stroke="#ff9800" stroke-width="24" fill="none"/>
+          <path class="tree-branch" d="M460 300 Q530 350 570 220" stroke="#ff9800" stroke-width="24" fill="none"/>
+          <path class="tree-branch" d="M400 500 Q320 480 320 400" stroke="#ff9800" stroke-width="18" fill="none"/>
+          <path class="tree-branch" d="M400 500 Q480 480 480 400" stroke="#ff9800" stroke-width="18" fill="none"/>
+          <path class="tree-branch" d="M430 110 Q370 60 390 10" stroke="#ff9800" stroke-width="14" fill="none"/>
+          <path class="tree-branch" d="M430 110 Q490 60 510 10" stroke="#ff9800" stroke-width="14" fill="none"/>
+          <!-- Flowers -->
+          <circle class="flower" cx="370" cy="220" r="28" fill="#f48fb1" stroke="#fff" stroke-width="6"/>
+          <circle class="flower" cx="570" cy="220" r="28" fill="#f8bbd0" stroke="#fff" stroke-width="6"/>
+          <circle class="flower" cx="320" cy="400" r="24" fill="#f06292" stroke="#fff" stroke-width="6"/>
+          <circle class="flower" cx="480" cy="400" r="24" fill="#e57373" stroke="#fff" stroke-width="6"/>
+          <circle class="flower" cx="390" cy="10" r="18" fill="#f8bbd0" stroke="#fff" stroke-width="5"/>
+          <circle class="flower" cx="510" cy="10" r="18" fill="#f06292" stroke="#fff" stroke-width="5"/>
+          <!-- Many heart-shaped leaves -->
+          <path class="leaf" d="M410 500 Q405 490 420 490 Q425 490 420 500 Q420 505 410 500Z" fill="#f06292"/>
+          <path class="leaf" d="M480 500 Q485 490 470 490 Q465 490 470 500 Q470 505 480 500Z" fill="#ec407a"/>
+          <path class="leaf" d="M370 320 Q365 310 380 310 Q385 310 380 320 Q380 325 370 320Z" fill="#f8bbd0"/>
+          <path class="leaf" d="M540 320 Q545 310 530 310 Q525 310 530 320 Q530 325 540 320Z" fill="#f06292"/>
+          <path class="leaf" d="M320 420 Q315 410 330 410 Q335 410 330 420 Q330 425 320 420Z" fill="#ad1457"/>
+          <path class="leaf" d="M480 420 Q485 410 470 410 Q465 410 470 420 Q470 425 480 420Z" fill="#1565c0"/>
+          <path class="leaf" d="M390 80 Q385 70 400 70 Q405 70 400 80 Q400 85 390 80Z" fill="#388e3c"/>
+          <path class="leaf" d="M510 80 Q515 70 500 70 Q495 70 500 80 Q500 85 510 80Z" fill="#4527a0"/>
+          <path class="leaf" d="M430 60 Q425 50 440 50 Q445 50 440 60 Q440 65 430 60Z" fill="#b71c1c"/>
+          <path class="leaf" d="M470 60 Q475 50 460 50 Q455 50 460 60 Q460 65 470 60Z" fill="#3949ab"/>
+          <path class="leaf" d="M450 300 Q445 290 460 290 Q465 290 460 300 Q460 305 450 300Z" fill="#43a047"/>
+          <path class="leaf" d="M460 300 Q465 290 450 290 Q445 290 450 300 Q450 305 460 300Z" fill="#fbc02d"/>
+        </svg>
+        <div class="fall-leaves" id="fallLeaves"></div>
+      </div>
+    </div>
+    <!-- Cake -->
+    <div class="cake-container" id="cakeContainer">
+      <div class="cake-layer bottom"></div>
+      <div class="cake-layer middle"></div>
+      <div class="cake-layer top"></div>
+      <div class="icing"></div>
+      <div class="candles">
+        <div class="candle"><div class="flame"></div></div>
+        <div class="candle"><div class="flame"></div></div>
+        <div class="candle"><div class="flame"></div></div>
+      </div>
+    </div>
+    <div class="message-area">
+      <div class="typewriter" id="typewriter"></div>
+      <div id="wishText" style="width:100%;max-width:700px;margin:0 auto;text-align:center;"></div>
+    </div>
+  </div>
+  <script>
+    // Stars
+    const stars = document.getElementById('stars');
+    for(let i=0;i<80;i++) {
+      const s = document.createElement('div');
+      s.className = 'star';
+      s.style.top = `${Math.random()*100}%`;
+      s.style.left = `${Math.random()*100}%`;
+      s.style.width = s.style.height = `${1+Math.random()*2}px`;
+      s.style.opacity = 0.6 + Math.random()*0.4;
+      s.style.animationDelay = `${Math.random()*3}s`;
+      stars.appendChild(s);
+    }
+    // Animation sequence
+    const stethoBtn = document.getElementById('stethoBtn');
+    const fallingHeart = document.getElementById('fallingHeart');
+    const groundLine = document.getElementById('groundLine');
+    const treeContainer = document.getElementById('treeContainer');
+    const fallLeaves = document.getElementById('fallLeaves');
+    const cakeContainer = document.getElementById('cakeContainer');
+    const typewriter = document.getElementById('typewriter');
+    const wishText = document.getElementById('wishText');
+    let animationStarted = false;
+    stethoBtn.onclick = function() {
+      if(animationStarted) return;
+      animationStarted = true;
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+      stethoBtn.remove();
+      // Heart
+      fallingHeart.classList.add('active');
+      setTimeout(()=>{ fallingHeart.classList.add('vanish'); }, 1200);
+      // Ground line
+      setTimeout(()=>{
+        groundLine.classList.add('active');
+        // Tree
+        setTimeout(()=>{
+          treeContainer.classList.add('active');
+          // After tree animation, remove tree and ground line before cake
+          setTimeout(()=>{
+            treeContainer.style.display = "none";
+            groundLine.style.display = "none";
+            // Leaves
+            setTimeout(()=>{
+              for(let i=0;i<32;i++) setTimeout(()=>spawnLeaf(), 110*i);
+              // Cake
+              setTimeout(()=>{
+                cakeContainer.classList.add('visible');
+                // Cake cut
+                setTimeout(()=>{
+                  cakeContainer.classList.add('cut');
+                  // Typewriter
+                  setTimeout(()=>{
+                    showTypewriter();
+                  }, 1200);
+                }, 1600);
+              }, 1700);
+            }, 400);
+          }, 2200);
+        }, 1100);
+      }, 1300);
+    };
+    function spawnLeaf() {
+      const leaf = document.createElement('div');
+      leaf.className = 'fall-leaf';
+      let x = 260 + Math.random()*380;
+      let y = 30 + Math.random()*70;
+      leaf.style.left = x + 'px';
+      leaf.style.top = y + 'px';
+      let colors = ['#f48fb1','#f06292','#ec407a','#f8bbd0','#43a047','#b71c1c','#3949ab','#388e3c','#4527a0','#ad1457','#fbc02d','#1565c0'];
+      let color = colors[Math.floor(Math.random()*colors.length)];
+      leaf.innerHTML = `<svg viewBox="0 0 48 48"><path d="M24 2 Q34 14 46 24 Q34 34 24 46 Q14 34 2 24 Q14 14 24 2Z" fill="${color}"/></svg>`;
+      fallLeaves.appendChild(leaf);
+      setTimeout(()=>{ leaf.remove(); }, 2800);
+    }
+    function showTypewriter() {
+      // Calculate time since 11 July 2004
+      const dob = new Date(2004, 6, 11); // JS months start at 0
+      function getSinceText() {
+        const now = new Date();
+        let diff = now - dob;
+        const days = Math.floor(diff/(1000*60*60*24));
+        diff -= days*1000*60*60*24;
+        const hours = Math.floor(diff/(1000*60*60));
+        diff -= hours*1000*60*60;
+        const mins = Math.floor(diff/(1000*60));
+        return `It’s been ${days} days, ${hours} hours, and ${mins} minutes since the world welcomed a future doctor.`;
+      }
+      function typeText(text, cb) {
+        let i = 0;
+        typewriter.textContent = '';
+        typewriter.classList.add('visible');
+        function type() {
+          if(i <= text.length) {
+            typewriter.textContent = text.slice(0,i);
+            i++;
+            setTimeout(type, text[i-1]==='\n'? 400 : 38);
+          } else if(cb) cb();
+        }
+        type();
+      }
+      typeText(getSinceText(), ()=>{
+        setTimeout(()=>{
+          typewriter.classList.remove('visible');
+          setTimeout(()=>{
+            showWishLines();
+          }, 500);
+        }, 2100);
+      });
+    }
+    // Show wish lines one by one, each with animation and color/font
+    function showWishLines() {
+      wishText.innerHTML = `
+        <div class="wish-line wish1">Happy Birthday, Arya!</div>
+        <div class="wish-line wish2">Wishing you a day full of joy, laughter, and everything you love.<br>You deserve all the happiness in the world.</div>
+        <div class="wish-line wish3">May this new year of your life bring success, peace, and lots of great memories.</div>
+        <div class="wish-line wish4">Stay the amazing person you are, and always keep smiling!</div>
+        <div class="wish-line wish5">– Your friend, Arijit 🎉🎂</div>
+      `;
+      wishText.querySelector('.wish3').style.color = '#ff9800';
+      wishText.querySelector('.wish5').style.color = '#fff';
+      const lines = wishText.querySelectorAll('.wish-line');
+      let delay = 0;
+      lines.forEach((line, idx) => {
+        setTimeout(()=>{ line.classList.add('visible'); }, delay);
+        delay += 900;
+      });
+    }
+  </script>
+</body>
+</html>
